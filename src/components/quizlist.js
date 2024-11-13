@@ -1,10 +1,14 @@
 // src/components/QuizList.js
+
 import React, { useEffect, useState } from "react";
 import quizService from "../services/quizService";
+import AddQuestionForm from "./AddQuestionForm";  // Import the AddQuestionForm component
+
 
 const QuizList = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [message, setMessage] = useState("");
+  const [selectedQuizId, setSelectedQuizId] = useState(null); // Track selected quiz for adding question
 
   useEffect(() => {
     fetchQuizzes();
@@ -13,13 +17,15 @@ const QuizList = () => {
   const fetchQuizzes = async () => {
     try {
       const response = await quizService.getAllQuizzes();
-      console.log("Fetched quizzes:", response.data);
       setQuizzes(response.data);
       setMessage("");
     } catch (error) {
-      console.error("Error fetching quizzes:", error);
       setMessage("Error fetching quizzes, please try again.");
     }
+  };
+
+  const handleAddQuestionClick = (quizId) => {
+    setSelectedQuizId(quizId); // Show form for the selected quiz
   };
 
   return (
@@ -32,6 +38,12 @@ const QuizList = () => {
           <li key={quiz.id}>
             <h3>{quiz.title || "No title available"}</h3>
             <p>{quiz.description || "No description available"}</p>
+            <button onClick={() => handleAddQuestionClick(quiz.id)}>
+              Add Question
+            </button>
+            {selectedQuizId === quiz.id && (
+              <AddQuestionForm quizId={quiz.id} onSuccess={fetchQuizzes} />
+            )}
             <ul>
               {quiz.questions && quiz.questions.length > 0 ? (
                 quiz.questions.map((question, index) => (
