@@ -32,4 +32,10 @@ public class QuizController {
         List<Quiz> quizzes = quizService.getAllQuizzes();
         return ResponseEntity.ok(quizzes);
     }
+    
+    @PostMapping("/{quizId}/questions")
+    public ResponseEntity<String> addQuestion(@PathVariable Long quizId, @RequestBody String question) {
+        quizService.addQuestionToQuiz(quizId, question);
+        return ResponseEntity.ok("Question successfully added");
+    }
 }
