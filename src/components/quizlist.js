@@ -17,7 +17,7 @@ const QuizList = () => {
   const fetchQuizzes = async () => {
     try {
       const response = await quizService.getAllQuizzes();
-      setQuizzes(response.data);
+      setQuizzes(response.data); // Ensure `quizzes` is updated correctly
       setMessage("");
     } catch (error) {
       setMessage("Error fetching quizzes, please try again.");
