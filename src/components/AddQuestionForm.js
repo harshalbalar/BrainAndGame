@@ -7,27 +7,22 @@ const AddQuestionForm = ({ quizId, onSuccess }) => {
   const [correctAnswerIndex, setCorrectAnswerIndex] = useState(0);
   const [message, setMessage] = useState("");
 
-  const handleOptionChange = (index, value) => {
-    const updatedOptions = [...options];
-    updatedOptions[index] = value;
-    setOptions(updatedOptions);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const question = {
+
+    const newQuestion = {
       text: questionText,
       options: options,
-      correctAnswerIndex: correctAnswerIndex
+      correctAnswerIndex: correctAnswerIndex,
     };
 
     try {
-      await quizService.addQuestion(quizId, question);
+      await quizService.addQuestion(quizId, newQuestion);
       setMessage("Question successfully saved!");
       setQuestionText("");
       setOptions(["", "", "", ""]);
       setCorrectAnswerIndex(0);
-      onSuccess();
+      onSuccess();  // Trigger a refresh or callback after successful save
     } catch (error) {
       setMessage("Error saving question, please try again.");
     }
@@ -44,31 +39,49 @@ const AddQuestionForm = ({ quizId, onSuccess }) => {
           onChange={(e) => setQuestionText(e.target.value)}
           required
         />
-        
-        {options.map((option, index) => (
-          <div key={index}>
-            <label>Option {index + 1}:</label>
-            <input
-              type="text"
-              value={option}
-              onChange={(e) => handleOptionChange(index, e.target.value)}
-              required
-            />
-          </div>
-        ))}
-        
-        <label>Correct Answer:</label>
-        <select
+        <br />
+        <label>Option 1:</label>
+        <input
+          type="text"
+          value={options[0]}
+          onChange={(e) => setOptions([e.target.value, options[1], options[2], options[3]])}
+          required
+        />
+        <br />
+        <label>Option 2:</label>
+        <input
+          type="text"
+          value={options[1]}
+          onChange={(e) => setOptions([options[0], e.target.value, options[2], options[3]])}
+          required
+        />
+        <br />
+        <label>Option 3:</label>
+        <input
+          type="text"
+          value={options[2]}
+          onChange={(e) => setOptions([options[0], options[1], e.target.value, options[3]])}
+          required
+        />
+        <br />
+        <label>Option 4:</label>
+        <input
+          type="text"
+          value={options[3]}
+          onChange={(e) => setOptions([options[0], options[1], options[2], e.target.value])}
+          required
+        />
+        <br />
+        <label>Correct Answer Index (0-3):</label>
+        <input
+          type="number"
+          min="0"
+          max="3"
           value={correctAnswerIndex}
-          onChange={(e) => setCorrectAnswerIndex(parseInt(e.target.value))}
-        >
-          {options.map((_, index) => (
-            <option key={index} value={index}>
-              Option {index + 1}
-            </option>
-          ))}
-        </select>
-
+          onChange={(e) => setCorrectAnswerIndex(Number(e.target.value))}
+          required
+        />
+        <br />
         <button type="submit">Save Question</button>
       </form>
       {message && <p>{message}</p>}

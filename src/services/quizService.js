@@ -8,9 +8,7 @@ const createQuiz = (quiz) => axios.post(API_URL, quiz);
 const getAllQuizzes = () => axios.get(API_URL);
 
 const addQuestion = (quizId, question) => {
-  return axios.post(`${API_URL}/${quizId}/questions`, question, {
-    headers: { "Content-Type": "application/json" },
-  });
+  return axios.post(`${API_URL}/${quizId}/questions`, question);
 };
 
 export default {
