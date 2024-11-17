@@ -30,4 +30,3 @@ public class QuizService {
         return quizRepository.save(quiz);
     }
 }
-
