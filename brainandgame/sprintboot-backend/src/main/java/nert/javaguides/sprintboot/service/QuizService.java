@@ -23,6 +23,7 @@ public class QuizService {
     public List<Quiz> getAllQuizzes() {
         return quizRepository.findAll();
     }
+
     public Quiz addQuestionToQuiz(Long quizId, String question) {
         Quiz quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new RuntimeException("Quiz not found"));
