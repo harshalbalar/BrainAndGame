@@ -50,7 +50,7 @@ const QuizList = () => {
             <ul>
               {question.options.map((option, i) => (
                 <li key={i}>
-                  {String.fromCharCode(97 + i)}. {option}  {/* 'a', 'b', 'c', 'd' */}
+                  {String.fromCharCode(65 + i)}. {option}  {/* 'a', 'b', 'c', 'd' */}
                 </li>
               ))}
             </ul>
@@ -59,9 +59,9 @@ const QuizList = () => {
           )}
         </div>
         <div>
-          <strong>Correct Answer:</strong> 
+          <strong>Correct Answer: </strong> 
           {question.correctAnswerIndex !== undefined ? (
-            String.fromCharCode(97 + question.correctAnswerIndex)  // 'a', 'b', 'c', 'd' mapping
+            String.fromCharCode(65 + question.correctAnswerIndex)  // 'a', 'b', 'c', 'd' mapping
           ) : (
             "Not specified"  // Handle missing or undefined correctAnswerIndex
           )}

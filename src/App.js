@@ -1,6 +1,7 @@
 import React from "react";
 import QuizForm from "./components/Quizform";
 import QuizList from "./components/quizlist";
+import './App.css';
 
 const App = () => {
   return (
