@@ -11,8 +11,10 @@ const addQuestion = (quizId, question) => {
   return axios.post(`${API_URL}/${quizId}/questions`, question);
 };
 
-export default {
+const quizService = {
   createQuiz,
   getAllQuizzes,
-  addQuestion,  // Export the new method
+  addQuestion,
 };
+
+export default quizService;

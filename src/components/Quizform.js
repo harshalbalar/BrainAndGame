@@ -1,11 +1,12 @@
-// src/components/QuizForm.js
 import React, { useState } from "react";
 import quizService from "../services/quizService";
+import Swal from 'sweetalert2'
+
 
 const QuizForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,38 +14,47 @@ const QuizForm = () => {
 
     try {
       await quizService.createQuiz(quiz);
-      setMessage("Quiz successfully saved!");
+      Swal.fire({
+        title: 'Success!',
+        text: 'Quiz successfully saved!',
+        icon: 'success',
+        confirmButtonText: 'Cool'
+      })
       setTitle("");
       setDescription("");
     } catch (error) {
-      setMessage("Error saving quiz, please try again.");
+      Swal.fire({
+        title: 'Error!',
+        text: 'Error saving quiz, please try again.',
+        icon: 'error',
+        confirmButtonText: 'ok'
+      })
+      // setMessage("Error saving quiz, please try again.");
     }
   };
 
   return (
-    <div>
-      <h2>Create a New Quiz</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Quiz Title:</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <br/>
-        <label>Description:</label>
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
-        <br/>
-        <button type="submit">Create Quiz</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+    <div id="quiz">
+        <form onSubmit={handleSubmit} className="quiz-form">
+        <p className="quiz-form-title">Add New Quiz</p>
+          <input
+            type="text"
+            placeholder="Enter the Quiz Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Enter the Quiz Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+          <button type="submit">Save Quiz</button>
+        {/* {message && <p className="quiz-message">{message}</p>} */}
+        </form>
+      </div>
   );
 };
 

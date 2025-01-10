@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import quizService from "../services/quizService";
-import AddQuestionForm from "./AddQuestionForm";  // Import the AddQuestionForm component
+import AddQuestionForm from "./AddQuestionForm";
+import QuizPlayer from "./QuizPlayer";
 
 const QuizList = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [message, setMessage] = useState("");
-  const [selectedQuizId, setSelectedQuizId] = useState(null); // Track selected quiz for adding question
+  const [selectedQuizId, setSelectedQuizId] = useState(null);
+  const [quizInPlay, setQuizInPlay] = useState(null);
 
   useEffect(() => {
     fetchQuizzes();
@@ -14,19 +16,10 @@ const QuizList = () => {
   const fetchQuizzes = async () => {
     try {
       const response = await quizService.getAllQuizzes();
-      console.log("Fetched quizzes:", response.data);  // Log the raw response data
-
-      // Parse the stringified questions
-      const quizzesWithParsedQuestions = response.data.map(quiz => {
-        const parsedQuestions = quiz.questions.map(question => {
-          // Parse the stringified question into an actual object
-          return JSON.parse(question);
-        });
-
-        // Return the updated quiz object with parsed questions
-        return { ...quiz, questions: parsedQuestions };
-      });
-
+      const quizzesWithParsedQuestions = response.data.map((quiz) => ({
+        ...quiz,
+        questions: quiz.questions.map((question) => JSON.parse(question)),
+      }));
       setQuizzes(quizzesWithParsedQuestions);
       setMessage("");
     } catch (error) {
@@ -35,67 +28,80 @@ const QuizList = () => {
   };
 
   const handleAddQuestionClick = (quizId) => {
-    setSelectedQuizId(quizId); // Show form for the selected quiz
+    setSelectedQuizId(quizId);
   };
 
-  const formatQuestion = (question, index) => {
-    console.log("Rendering question:", question);  // Log the question object
-    
-    return (
-      <div key={index}>
-        <h4>Question {index + 1}: {question.text}</h4>
-        <div>
-          <strong>Options:</strong>
-          {question.options && Array.isArray(question.options) && question.options.length > 0 ? (
-            <ul>
-              {question.options.map((option, i) => (
-                <li key={i}>
-                  {String.fromCharCode(65 + i)}. {option}  {/* 'a', 'b', 'c', 'd' */}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No options available.</p>  // Handle if options are missing
-          )}
-        </div>
-        <div>
-          <strong>Correct Answer: </strong> 
-          {question.correctAnswerIndex !== undefined ? (
-            String.fromCharCode(65 + question.correctAnswerIndex)  // 'a', 'b', 'c', 'd' mapping
-          ) : (
-            "Not specified"  // Handle missing or undefined correctAnswerIndex
-          )}
-        </div>
-      </div>
-    );
+  const handlePlayQuizClick = (quiz) => {
+    if (quiz.questions && quiz.questions.length > 0) {
+      setQuizInPlay(quiz);
+    } else {
+      alert("Please add questions to the quiz before playing!");
+    }
   };
+
+  const handleQuizFinish = () => {
+    setQuizInPlay(null);
+    alert("Thanks for playing!");
+  };
+
+  const formatQuestion = (question, index) => (
+    <div key={index} className="quiz-question">
+      <h4 className="quiz-question-title">
+        Question {index + 1}: {question.text}
+      </h4>
+      <div>
+        <strong>Options:</strong>
+        <ul className="quiz-options">
+          {question.options.map((option, i) => (
+            <li key={i}>{String.fromCharCode(65 + i)}. {option}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <strong>Correct Answer: </strong>
+        {question.options[0]}
+      </div>
+    </div>
+  );
 
   return (
-    <div>
-      <h2>All Created Quizzes</h2>
-      <button onClick={fetchQuizzes}>Refresh Quizzes</button>
-      {message && <p>{message}</p>}
-      <ul>
-        {quizzes.map((quiz) => (
-          <li key={quiz.id}>
-            <h3>{quiz.title || "No title available"}</h3>
-            <p>{quiz.description || "No description available"}</p>
-            <button onClick={() => handleAddQuestionClick(quiz.id)}>
-              Add Question
-            </button>
-            {selectedQuizId === quiz.id && (
-              <AddQuestionForm quizId={quiz.id} onSuccess={fetchQuizzes} />
-            )}
-            <ul>
-              {quiz.questions && quiz.questions.length > 0 ? (
-                quiz.questions.map((question, index) => formatQuestion(question, index))
-              ) : (
-                <p>No questions added yet.</p>
+    <div className="quiz-container">
+      <h2 className="quiz-title">All Created Quizzes</h2>
+      <button className="quiz-refresh-button" onClick={fetchQuizzes}>
+        Refresh Quizzes
+      </button>
+      {message && <p className="quiz-message">{message}</p>}
+      {quizInPlay ? (
+        <QuizPlayer quiz={quizInPlay} onFinish={handleQuizFinish} />
+      ) : (
+        <ul className="quiz-list">
+          {quizzes.map((quiz) => (
+            <li key={quiz.id} className="quiz-item">
+              <h3 className="quiz-item-title">{quiz.title || "No title available"}</h3>
+              <p className="quiz-item-description">{quiz.description || "No description available"}</p>
+              <button
+                className="quiz-add-question-button"
+                onClick={() => handleAddQuestionClick(quiz.id)}
+              >Add Question</button>
+              {selectedQuizId === quiz.id && (
+                <AddQuestionForm quizId={quiz.id} onSuccess={fetchQuizzes} />
               )}
-            </ul>
-          </li>
-        ))}
-      </ul>
+              <button
+                className="quiz-play-button"
+                onClick={() => handlePlayQuizClick(quiz)}
+              >Play Quiz</button>
+              <h4 className="quiz-question-header">Questions:</h4>
+              <ul className="quiz-questions-list">
+                {quiz.questions && quiz.questions.length > 0 ? (
+                  quiz.questions.map((question, index) => formatQuestion(question, index))
+                ) : (
+                  <p className="quiz-no-questions">No questions added yet.</p>
+                )}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
