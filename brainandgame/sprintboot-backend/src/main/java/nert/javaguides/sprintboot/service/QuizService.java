@@ -30,4 +30,20 @@ public class QuizService {
         quiz.getQuestions().add(question);
         return quizRepository.save(quiz);
     }
+
+    public Quiz getQuizById(Long quizId) {
+        return null;
+    }
+
+    // Toggle quiz status (open/close)
+    public Quiz toggleQuizStatus(Long quizId) {
+        Quiz quiz = quizRepository.findById(quizId)
+                .orElseThrow(() -> new RuntimeException("Quiz not found"));
+
+        // Toggle the status
+        quiz.setOpen(!quiz.isOpen());
+
+        // Save and return the updated quiz
+        return quizRepository.save(quiz);
+    }
 }

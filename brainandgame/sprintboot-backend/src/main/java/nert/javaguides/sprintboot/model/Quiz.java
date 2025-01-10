@@ -15,6 +15,9 @@ public class Quiz {
     @ElementCollection
     private List<String> questions;
 
+    // Add an isOpen flag for the quiz's status (open/close)
+    private boolean isOpen = false;
+
     // Constructors, getters, and setters
     public Quiz() {}
 
@@ -54,5 +57,13 @@ public class Quiz {
 
     public void setQuestions(List<String> questions) {
         this.questions = questions;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(boolean isOpen) {
+        this.isOpen = isOpen;
     }
 }

@@ -38,4 +38,11 @@ public class QuizController {
         quizService.addQuestionToQuiz(quizId, question);
         return ResponseEntity.ok("Question successfully added");
     }
+
+    // Endpoint to toggle quiz status (open/closed)
+    @PutMapping("/{quizId}/toggle-status")
+    public ResponseEntity<String> toggleQuizStatus(@PathVariable Long quizId) {
+        quizService.toggleQuizStatus(quizId);
+        return ResponseEntity.ok("Quiz status successfully updated");
+    }
 }
