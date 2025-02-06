@@ -224,12 +224,14 @@ body {
 #event {
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
-  height: 80vh; 
+  height: 100%;
+  margin: 50px 0px;
 }
 
-#event p {
+#event .title {
   font-size: 30px;
   color: rgb(255, 255, 255);
   margin: 15px 0px;
@@ -245,7 +247,7 @@ body {
   border: 2px solid white;
   border-radius: 10px;
   width: 60%;
-  height: 60%;
+  height: 500px;
   background-color: #121212;
 }
 #event button {
@@ -288,9 +290,11 @@ body {
 #quiz {
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
-  height: 80vh;
+  height: 100%;
+  margin: 50px 0px;
 }
 
 .quiz-form-title {
@@ -310,7 +314,7 @@ body {
   border: 2px solid white;
   border-radius: 10px;
   width: 60%;
-  height: 60%;
+  height: 500px;
   background-color: #121212;
 }
 
@@ -486,7 +490,7 @@ body {
   width: 60%;
   background-color: #121212;
   padding: 20px;
-  border: 2px solid white;
+  /* border: 2px solid white; */
   border-radius: 8px;
   margin: 20px auto;
 }
@@ -518,6 +522,7 @@ body {
   background-color: transparent;
   color: white;
   border: 2px solid white;
+  border-radius: 8px;
   font-size: 16px;
   margin-bottom: 20px;
   transition: 0.3s ease-in-out;
@@ -640,31 +645,45 @@ body {
   width: 100%;
 }
 
-.event-list-title {
+.event-name{
   font-size: 28px;
-  margin-bottom: 20px;
+  margin:20px 0px;
   text-transform: uppercase;
+  color: white;
+}
+.event-item .estatus{
+  /* font-size: 28px; */
+  text-transform: uppercase;
+  color: white;
+  margin: 10px 0px;
 }
 
 /* Style for the event list */
+.event-list-title{
+  color: #000000;
+  font-size: 30px;
+  margin: 20px 0px;
+  font-weight: 500;
+}
 .event-list {
   list-style: none;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 20px; /* Spacing between event items */
-  width: 100%;
+  width: 90%;
   justify-content: center;
 }
 
 .event-item {
-  background-color: #404040;
+  background-color: #000000;
   padding: 15px;
   width: 30%;
   margin: 10px 0;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: space-between;
   min-height: 220px; /* Ensures items have consistent height */
@@ -673,10 +692,6 @@ body {
 .event-name {
   font-size: 22px;
   margin-bottom: 10px;
-}
-
-.event-status {
-  font-size: 18px;
 }
 
 .event-status .open {
@@ -688,10 +703,20 @@ body {
 }
 
 .assigned-quizzes h4 {
-  margin-top: 10px;
-  font-size: 18px;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 100;
+  margin: 10px 0px;
 }
-
+.assigned-quizzes select{
+  width: 100%;
+  padding: 10px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  margin: 10px 0px;
+  /* margin: 0px 20px; */
+}
 .quiz-item {
   font-size: 16px;
   margin-left: 20px;
@@ -703,13 +728,41 @@ body {
   color: gray;
 }
 
+.box1{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 80%;
+  height: 100%;
+} 
+.box2{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0px;
+} 
+.box3{
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  line-height: 25px;
+  width: 60%;
+  margin: 10px 0px;
+} 
+.box4{
+  display: flex;
+  justify-content: start;
+  line-height: 25px;
+  width: 60%;
+} 
+
 /* Style for the view event button */
-.view-event-button {
+.box1 .view-event-button {
   margin-top: 10px;
   padding: 10px 20px;
   font-size: 16px;
   background-color: #007bff;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -885,4 +938,41 @@ h3 {
 
 .assign-button:hover {
   background-color: #0056b3;
+}
+
+#event-detail {
+  padding: 20px;
+}
+
+table.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+
+}
+.leaderboard-table {
+  width: 80%;
+  margin: 0 auto; /* centers the table horizontally */
+}
+
+table.leaderboard th,
+table.leaderboard td {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+table.leaderboard th {
+  background-color: #f4f4f4;
+}
+
+.leaderboard-table {
+  width: 80%;
+  margin: 0 auto; /* optional: centers the table */
+  border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 8px;
+  border: 1px solid #ccc; /* optional: add borders for clarity */
 }

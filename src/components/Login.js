@@ -14,7 +14,7 @@ const Login = () => {
             const response = await login(username, password);
             saveToken(response.data.jwt);
             setError("");
-            navigate("/add-event");
+            navigate("/events");
         } catch (error) {
             setError(error.response?.data?.error || "Invalid credentials");
         }

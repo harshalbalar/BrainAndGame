@@ -1,15 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import EventList from "./components/EventList";
-import EventDetails from "./components/EventDetails";
-import EventForm from "./components/EventForm";
-import QuizForm from "./components/Quizform";
-import QuizList from "./components/quizlist";
-import Navbar from "./components/Navbar";
+import EventList from "./components/legacy/EventList";
+import EventDetails from "./components/legacy/EventDetails";
+import EventForm from "./components/legacy/EventForm";
+import QuizForm from "./components/legacy/Quizform";
+import QuizList from "./components/legacy/quizlist";
+import Navbar from "./components/legacy/Navbar";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
+import MyEvents from "./components/event/MyEvents";
+import MyQuizzes from "./components/Quiz/MyQuizzes";
 
 const App = () => {
     return (
@@ -29,9 +31,9 @@ const App = () => {
                                 <Routes>
                                     <Route path="/add-event" element={<EventForm />} />
                                     <Route path="/add-quiz" element={<QuizForm />} />
-                                    <Route path="/quizzes" element={<QuizList />} />
+                                    <Route path="/quizzes" element={<MyQuizzes />} />
                                     <Route path="/events/:eventId" element={<EventDetails />} />
-                                    <Route path="/events" element={<EventList />} />
+                                    <Route path="/events" element={<MyEvents />} />
                                 </Routes>
                             </div>
                         </PrivateRoute>

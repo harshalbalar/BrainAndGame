@@ -21,7 +21,7 @@ const Register = () => {
             console.log(loginResponse.data.jwt)
 
             // Redirect to default route
-            navigate("/add-event");
+            navigate("/events");
         } catch (error) {
             setError(error.response?.data?.error || "An error occurred");
         }
