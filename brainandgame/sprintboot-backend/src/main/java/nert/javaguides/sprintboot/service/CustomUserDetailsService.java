@@ -1,8 +1,7 @@
 package nert.javaguides.sprintboot.service;
 
-import nert.javaguides.sprintboot.model.User;
+import nert.javaguides.sprintboot.model.user.User;
 import nert.javaguides.sprintboot.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

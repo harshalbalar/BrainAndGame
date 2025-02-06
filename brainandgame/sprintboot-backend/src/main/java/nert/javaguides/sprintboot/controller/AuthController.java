@@ -1,8 +1,7 @@
 package nert.javaguides.sprintboot.controller;
 
 import nert.javaguides.sprintboot.dto.AuthRequest;
-import nert.javaguides.sprintboot.dto.AuthResponse;
-import nert.javaguides.sprintboot.model.User;
+import nert.javaguides.sprintboot.model.user.User;
 import nert.javaguides.sprintboot.repository.UserRepository;
 import nert.javaguides.sprintboot.service.CustomUserDetailsService;
 import nert.javaguides.sprintboot.util.JwtUtil;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
